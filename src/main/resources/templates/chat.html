@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Thymeleaf 나의 채팅</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        #chat-window {
+            border: 1px solid #ccc;
+            height: 300px;
+            overflow-y: auto;
+            padding: 10px;
+            margin-bottom: 10px;
+            background-color: #f9f9f9;
+        }
+
+        .message {
+            margin-bottom: 8px;
+        }
+
+        .sender {
+            font-weight: bold;
+            color: #007bff;
+        }
+
+        .timestamp {
+            font-size: 0.8em;
+            color: #888;
+            margin-left: 10px;
+        }
+
+        .my-message {
+            text-align: right;
+        }
+
+        .my-message .sender {
+            color: #28a745;
+        }
+
+        .input-area {
+            display: flex;
+        }
+
+        input[type="text"] {
+            flex-grow: 1;
+            padding: 8px;
+            margin-right: 5px;
+            border: 1px solid #ddd;
+        }
+
+        button {
+            padding: 8px 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .error-message {
+            color: red;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+<h1>나의 채팅 기록</h1>
+
+<p class="error-message" th:if="${errorMessage}" th:text="${errorMessage}"></p>
+
+<div id="chat-window">
+    <div th:class="${msg.sender == '나'} ? 'message' : 'message my-message'"
+         th:each="msg : ${messages}">
+        <span class="sender" th:text="${msg.sender}"></span> <span th:text="${msg.content}"></span>
+        <span class="timestamp" th:text="${#temporals.format(msg.timestamp, 'yyyy-MM-dd HH:mm:ss')}"></span>
+    </div>
+</div>
+
+<div class="input-area">
+    <input id="contentInput" placeholder="메시지 입력..." required type="text"/>
+</div>
+
+<p>스스로에게 물어보세요</p>
+<p>질문은 Enter</p>
+<p>답변은 Enter + Shift</p>
+
+<script>
+    const chatWindow = document.getElementById('chat-window');
+    const contentInput = document.getElementById('contentInput');
+
+    contentInput.addEventListener('keyup', function (event) {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+
+            if (event.shiftKey) {
+                sendMessage('나');
+            } else {
+                sendMessage(' ');
+            }
+        }
+    });
+
+    function sendMessage(senderType) {
+        const content = contentInput.value.trim();
+
+        if (!content) {
+            alert('메시지를 입력해주세요.');
+            return;
+        }
+
+        const data = {
+            sender: senderType,
+            content: content
+        };
+
+        fetch('/chat', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+            .then(response => {
+                if (response.redirected) {
+                    window.location.href = response.url;
+                } else {
+                    window.location.reload();
+                }
+                contentInput.value = '';
+                contentInput.focus();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('메시지 전송 중 오류가 발생했습니다.');
+                contentInput.focus();
+            });
+    }
+
+    window.onload = function () {
+        chatWindow.scrollTop = chatWindow.scrollHeight;
+        contentInput.focus();
+    };
+</script>
+</body>
+</html>
