@@ -11,10 +11,12 @@
 
         #chat-window {
             border: 1px solid #ccc;
-            height: 300px;
+            width: 50vw; /* 뷰포트 너비의 50% */
+            max-width: 600px; /* 너무 커지지 않도록 최대값 제한 (선택사항) */
+            height: 600px;
             overflow-y: auto;
             padding: 10px;
-            margin-bottom: 10px;
+            margin: 20px auto;
             background-color: #f9f9f9;
         }
 
@@ -43,6 +45,8 @@
 
         .input-area {
             display: flex;
+            margin-bottom: 10px;
+            gap: 10px;
         }
 
         input[type="text"] {
@@ -72,6 +76,7 @@
 </head>
 <body>
 <h1>나의 채팅 기록</h1>
+<p>스스로에게 물어보세요</p>
 
 <p class="error-message" th:if="${errorMessage}" th:text="${errorMessage}"></p>
 
@@ -79,74 +84,74 @@
     <div th:class="${msg.sender == '나'} ? 'message' : 'message my-message'"
          th:each="msg : ${messages}">
         <span class="sender" th:text="${msg.sender}"></span> <span th:text="${msg.content}"></span>
-        <span class="timestamp" th:text="${#temporals.format(msg.timestamp, 'yyyy-MM-dd HH:mm:ss')}"></span>
+        <span class="timestamp" th:text="${#temporals.format(msg.timestamp, 'HH:mm')}"></span>
     </div>
 </div>
 
 <div class="input-area">
     <input id="contentInput" placeholder="메시지 입력..." required type="text"/>
+    <button id="questionButton" title="Enter + Shift" type="button">질문하기</button>
+    <button id="answerButton" title="Enter" type="button">대답하기</button>
 </div>
-
-<p>스스로에게 물어보세요</p>
-<p>질문은 Enter</p>
-<p>답변은 Enter + Shift</p>
 
 <script>
     const chatWindow = document.getElementById('chat-window');
+    const questionButton = document.getElementById('questionButton');
+    const answerButton = document.getElementById('answerButton');
     const contentInput = document.getElementById('contentInput');
+    let isComposing = false;
 
-    contentInput.addEventListener('keyup', function (event) {
-        if (event.key === 'Enter') {
-            event.preventDefault();
+    // 한글 조합 시작/끝 상태 추적
+    contentInput.addEventListener('compositionstart', () => {
+        isComposing = true;
+    });
+    contentInput.addEventListener('compositionend', () => {
+        isComposing = false;
+    });
 
-            if (event.shiftKey) {
-                sendMessage('나');
-            } else {
-                sendMessage(' ');
-            }
-        }
+    questionButton.addEventListener('click', function () {
+        sendMessage('나');
+    });
+
+    answerButton.addEventListener('click', function () {
+        sendMessage(' ');
+    });
+
+    contentInput.addEventListener('keydown', function (event) {
+        // 조합 중이거나 Enter가 아니면 무시
+        if (isComposing || event.key !== 'Enter' || event.repeat) return;
+
+        event.preventDefault();
+        const senderType = event.shiftKey ? '나' : ' ';
+        sendMessage(senderType);
     });
 
     function sendMessage(senderType) {
         const content = contentInput.value.trim();
-
         if (!content) {
             alert('메시지를 입력해주세요.');
             return;
         }
-
-        const data = {
-            sender: senderType,
-            content: content
-        };
-
         fetch('/chat', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({sender: senderType, content})
         })
-            .then(response => {
-                if (response.redirected) {
-                    window.location.href = response.url;
-                } else {
-                    window.location.reload();
-                }
-                contentInput.value = '';
-                contentInput.focus();
+            .then(res => {
+                if (res.redirected) window.location.href = res.url;
+                else window.location.reload();
             })
-            .catch(error => {
-                console.error('Error:', error);
+            .catch(err => {
+                console.error(err);
                 alert('메시지 전송 중 오류가 발생했습니다.');
-                contentInput.focus();
             });
     }
 
-    window.onload = function () {
+    window.onload = () => {
         chatWindow.scrollTop = chatWindow.scrollHeight;
         contentInput.focus();
     };
 </script>
+
 </body>
 </html>
