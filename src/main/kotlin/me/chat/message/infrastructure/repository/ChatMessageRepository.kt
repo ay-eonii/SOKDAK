@@ -1,6 +1,6 @@
-package me.chat.infrastructure.repository
+package me.chat.message.infrastructure.repository
 
-import me.chat.domain.entity.ChatMessage
+import me.chat.message.domain.entity.ChatMessage
 import org.springframework.data.mongodb.repository.MongoRepository
 
 interface ChatMessageRepository : MongoRepository<ChatMessage, String> {

@@ -1,6 +1,6 @@
-package me.chat.api.request
+package me.chat.message.api.request
 
-import me.chat.domain.entity.ChatMessage
+import me.chat.message.domain.entity.ChatMessage
 
 data class ChatRequest(
     val content: String,

@@ -1,8 +1,8 @@
-package me.chat.domain.service
+package me.chat.message.domain.service
 
-import me.chat.api.request.ChatRequest
-import me.chat.domain.entity.ChatMessage
-import me.chat.infrastructure.repository.ChatMessageRepository
+import me.chat.message.api.request.ChatRequest
+import me.chat.message.domain.entity.ChatMessage
+import me.chat.message.infrastructure.repository.ChatMessageRepository
 import org.springframework.stereotype.Service
 
 @Service
