@@ -5,72 +5,106 @@
     <title>Thymeleaf 나의 채팅</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-family: 'Arial', sans-serif;
+            min-height: 100vh;
+            padding: 20px;
+            background-color: #f0f0f0;
+            box-sizing: border-box;
         }
 
         #chat-window {
-            border: 1px solid #ccc;
-            width: 50vw; /* 뷰포트 너비의 50% */
-            max-width: 600px; /* 너무 커지지 않도록 최대값 제한 (선택사항) */
-            height: 600px;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 600px;
+            height: 700px;
             overflow-y: auto;
-            padding: 10px;
-            margin: 20px auto;
+            padding: 24px;
             background-color: #f9f9f9;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            margin-bottom: 16px;
+        }
+
+        .row {
+            flex-direction: row;
+        }
+
+        .row-reverse {
+            flex-direction: row-reverse;
+        }
+
+        .message, .my-message {
+            padding: 10px 14px;
+            border-radius: 10px;
+            font-size: 16px;
+            word-break: break-word;
+            max-width: 75%;
         }
 
         .message {
-            margin-bottom: 8px;
+            background-color: #f3f0f9;
+            align-self: flex-start;
+        }
+
+        .my-message {
+            background-color: #e6f4ea;
+            align-self: flex-end;
         }
 
         .sender {
             font-weight: bold;
+            color: #28a745;
+            margin-bottom: 4px;
+        }
+
+        .my-message .sender {
             color: #007bff;
         }
 
         .timestamp {
-            font-size: 0.8em;
+            font-size: 0.75em;
             color: #888;
-            margin-left: 10px;
-        }
-
-        .my-message {
-            text-align: right;
-        }
-
-        .my-message .sender {
-            color: #28a745;
+            margin: 0 8px;
+            white-space: nowrap;
         }
 
         .input-area {
             display: flex;
-            margin-bottom: 10px;
             gap: 10px;
+            width: 100%;
+            max-width: 600px;
         }
 
         input[type="text"] {
             flex-grow: 1;
-            padding: 8px;
-            margin-right: 5px;
+            padding: 10px;
             border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
         }
 
         button {
-            padding: 8px 15px;
-            background-color: #007bff;
+            padding: 10px 16px;
+            background-color: #63c5aa;
             color: white;
             border: none;
             cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
         }
 
         button:hover {
-            background-color: #0056b3;
+            background-color: #4cb89a;
         }
 
         .error-message {
             color: red;
             margin-bottom: 10px;
+            text-align: center;
         }
     </style>
 </head>
@@ -81,9 +115,15 @@
 <p class="error-message" th:if="${errorMessage}" th:text="${errorMessage}"></p>
 
 <div id="chat-window">
-    <div th:class="${msg.sender == '나'} ? 'message' : 'message my-message'"
+    <div style="display: flex; align-items: flex-end; margin-bottom: 12px;"
+         th:classappend="${msg.sender == '나'} ? 'row' : 'row-reverse'"
          th:each="msg : ${messages}">
-        <span class="sender" th:text="${msg.sender}"></span> <span th:text="${msg.content}"></span>
+
+        <div th:class="${msg.sender == '나'} ? 'message' : 'my-message'">
+            <span class="sender" th:text="${msg.sender}"></span>
+            <span th:text="${msg.content}"></span>
+        </div>
+
         <span class="timestamp" th:text="${#temporals.format(msg.timestamp, 'HH:mm')}"></span>
     </div>
 </div>
