@@ -1,11 +1,10 @@
 spring:
   data:
     mongodb:
-      uri: mongodb://admin:admin@localhost:27017/chatme?authSource=admin&authMechanism=SCRAM-SHA-1
-      host: localhost
-      port: 27017
-      database: chatme
-      username: admin
-      password: admin
+      uri: ${DB_URL}
+      host: ${HOST:localhost}
+      port: ${PORT:27017}
+      database: ${DB_DATABASE:chatme}
+      username: ${DB_USERNAME}
+      password: ${DB_PASSWORD}
       authentication-database: admin
-
