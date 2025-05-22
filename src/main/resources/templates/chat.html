@@ -138,8 +138,8 @@
             body: JSON.stringify({sender: senderType, content})
         })
             .then(res => {
-                if (res.redirected) window.location.href = res.url;
-                else window.location.reload();
+                if (!res.ok) throw new Error('HTTP error ' + res.status);
+                window.location.reload();
             })
             .catch(err => {
                 console.error(err);
