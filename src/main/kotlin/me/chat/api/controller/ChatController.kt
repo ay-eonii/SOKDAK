@@ -20,8 +20,7 @@ class ChatController(private val chatService: ChatService) {
     @PostMapping("/chat")
     fun sendMessage(
         @RequestBody request: ChatRequest,
-    ): String {
+    ) {
         chatService.addMessage(request)
-        return "redirect:/chat"
     }
 }
