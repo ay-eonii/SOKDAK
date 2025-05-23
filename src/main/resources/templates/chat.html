@@ -4,11 +4,14 @@
     <meta charset="UTF-8">
     <title>Thymeleaf 나의 채팅</title>
     <style>
+        body, input, textarea, button {
+            font-family: 'Arial', sans-serif;
+        }
+
         body {
             display: flex;
             flex-direction: column;
             align-items: center;
-            font-family: 'Arial', sans-serif;
             min-height: 100vh;
             padding: 20px;
             background-color: #f0f0f0;
@@ -43,6 +46,7 @@
             font-size: 16px;
             word-break: break-word;
             max-width: 75%;
+            /*white-space: pre-wrap;*/
         }
 
         .message {
@@ -121,7 +125,7 @@
 
         <div th:class="${msg.sender == '나'} ? 'message' : 'my-message'">
             <span class="sender" th:text="${msg.sender}"></span>
-            <span th:text="${msg.content}"></span>
+            <span style="white-space: pre-wrap;" th:text="${msg.content}"></span>
         </div>
 
         <span class="timestamp" th:text="${#temporals.format(msg.timestamp, 'HH:mm')}"></span>
@@ -129,8 +133,9 @@
 </div>
 
 <div class="input-area">
-    <button id="questionButton" title="Enter + Shift" type="button">질문하기</button>
-    <input id="contentInput" placeholder="메시지 입력..." required type="text"/>
+    <button id="questionButton" title="Ctrl + Enter" type="button">질문하기</button>
+    <textarea id="contentInput" placeholder="메시지 입력..." required rows="2"
+              style="flex-grow: 1; padding: 10px; border: 1px solid #ddd; border-radius: 5px; font-size: 16px; resize: none"></textarea>
     <button id="answerButton" title="Enter" type="button">대답하기</button>
 </div>
 
@@ -158,12 +163,16 @@
     });
 
     contentInput.addEventListener('keydown', function (event) {
-        // 조합 중이거나 Enter가 아니면 무시
-        if (isComposing || event.key !== 'Enter' || event.repeat) return;
+        if (isComposing || event.repeat) return;
 
-        event.preventDefault();
-        const senderType = event.shiftKey ? '나' : ' ';
-        sendMessage(senderType);
+        if (event.key === 'Enter') {
+            if (event.shiftKey) {
+                return;
+            }
+            event.preventDefault();
+            const senderType = event.ctrlKey ? '나' : ' ';
+            sendMessage(senderType);
+        }
     });
 
     function sendMessage(senderType) {
