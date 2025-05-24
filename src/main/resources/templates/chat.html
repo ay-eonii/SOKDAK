@@ -2,7 +2,7 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Thymeleaf 나의 채팅</title>
+    <title>Chat Me</title>
     <style>
         body, input, textarea, button {
             font-family: 'Arial', sans-serif;
@@ -110,11 +110,28 @@
             margin-bottom: 10px;
             text-align: center;
         }
+
+        .feedback-link {
+            margin-top: 12px;
+            font-size: 0.9em;
+            color: #555;
+            text-align: center;
+        }
+
+        .feedback-link a {
+            color: #5e7999;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .feedback-link a:hover {
+            text-decoration: underline;
+        }
+
     </style>
 </head>
 <body>
-<h1>나의 채팅 기록</h1>
-<p>스스로에게 물어보세요</p>
+<h2>스스로에게 물어보세요</h2>
 
 <p class="error-message" th:if="${errorMessage}" th:text="${errorMessage}"></p>
 
@@ -137,6 +154,10 @@
     <textarea id="contentInput" placeholder="메시지 입력..." required rows="2"
               style="flex-grow: 1; padding: 10px; border: 1px solid #ddd; border-radius: 5px; font-size: 16px; resize: none"></textarea>
     <button id="answerButton" title="Enter" type="button">대답하기</button>
+</div>
+
+<div class="feedback-link">
+    <a href="https://forms.gle/UBNHMTcbvcYQNeCa7" target="_blank">💬 서비스에 대해 어떻게 느끼셨나요?</a>
 </div>
 
 <script>
