@@ -1,4 +1,4 @@
-package me.chat.user.domain.entity
+package me.chat.member.domain.entity
 
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document

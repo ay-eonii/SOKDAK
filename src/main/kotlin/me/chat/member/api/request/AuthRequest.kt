@@ -1,4 +1,4 @@
-package me.chat.user.api.request
+package me.chat.member.api.request
 
 data class AuthRequest(
     val name: String,

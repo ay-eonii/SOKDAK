@@ -1,8 +1,8 @@
-package me.chat.user.domain.service
+package me.chat.member.domain.service
 
-import me.chat.user.api.request.SignUpForm
-import me.chat.user.domain.entity.Member
-import me.chat.user.infrastructure.repository.MemberRepository
+import me.chat.member.api.request.SignUpForm
+import me.chat.member.domain.entity.Member
+import me.chat.member.infrastructure.repository.MemberRepository
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional

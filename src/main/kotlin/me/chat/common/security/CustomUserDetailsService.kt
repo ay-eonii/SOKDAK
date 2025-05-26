@@ -1,6 +1,6 @@
 package me.chat.common.security
 
-import me.chat.user.infrastructure.repository.MemberRepository
+import me.chat.member.infrastructure.repository.MemberRepository
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.User
 import org.springframework.security.core.userdetails.UserDetails

@@ -1,7 +1,7 @@
-package me.chat.user.api.controller
+package me.chat.member.api.controller
 
-import me.chat.user.api.request.SignUpForm
-import me.chat.user.domain.service.MemberService
+import me.chat.member.api.request.SignUpForm
+import me.chat.member.domain.service.MemberService
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping

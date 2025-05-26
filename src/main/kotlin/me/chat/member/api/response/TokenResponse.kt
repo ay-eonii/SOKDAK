@@ -1,4 +1,4 @@
-package me.chat.user.api.response
+package me.chat.member.api.response
 
 data class TokenResponse(
     val accessToken: String
