@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Chat Me - 회원가입</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .signup-container {
+            background-color: #f9f9f9;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        h2 {
+            margin-bottom: 24px;
+            color: #333;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 16px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        .signup-button {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            background-color: #63c5aa;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out;
+        }
+
+        .signup-button:hover {
+            background-color: #4cb89a;
+        }
+
+        .error-message {
+            color: red;
+            margin-top: 10px;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+
+<div class="signup-container">
+    <h2>회원가입</h2>
+
+    <form method="post" th:action="@{/signup}">
+        <input
+                id="name"
+                name="username"
+                placeholder="이름"
+                required
+                th:value="${signUpForm.username}"
+                type="text"/>
+        <input
+                id="password"
+                name="password"
+                placeholder="비밀번호"
+                required
+                type="password"/>
+        <button class="signup-button" type="submit">가입하기</button>
+    </form>
+
+    <p class="error-message" id="error"></p>
+</div>
+</body>
+</html>

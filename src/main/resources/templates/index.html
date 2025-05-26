@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>채팅 선택</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        h1 {
+            margin-bottom: 40px;
+            color: #333;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 20px;
+        }
+
+        .chat-button {
+            padding: 16px 32px;
+            font-size: 18px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            background-color: #63c5aa;
+            color: white;
+            transition: background-color 0.2s ease-in-out;
+            text-decoration: none;
+        }
+
+        .chat-button:hover {
+            background-color: #4cb89a;
+        }
+    </style>
+</head>
+<body>
+<h1>채팅 모드 선택</h1>
+<div class="button-group">
+    <a class="chat-button" href="/chat/any">바글바글 채팅</a>
+    <a class="chat-button" href="/chat/room">고요한 채팅</a>
+</div>
+</body>
+</html>
