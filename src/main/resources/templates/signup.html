@@ -61,6 +61,7 @@
             color: red;
             margin-top: 10px;
             font-size: 0.9em;
+            height: 1em;
         }
     </style>
 </head>
@@ -68,9 +69,16 @@
 
 <div class="signup-container">
     <h2>회원가입</h2>
+    <!-- 1) 숨김 필드: 브라우저가 여기에 자동완성 넣게 유도 -->
 
-    <form method="post" th:action="@{/signup}">
+    <form autocomplete="off" method="post" th:action="@{/signup}">
+        <input autocomplete="username" name="fake-user" style="position:absolute; top:-1000px; left:-1000px;"
+               type="text"/>
+        <input autocomplete="current-password" name="fake-pass" style="position:absolute; top:-1000px; left:-1000px;"
+               type="password"/>
+
         <input
+                autocomplete="off"
                 id="name"
                 name="username"
                 placeholder="이름"
@@ -78,15 +86,62 @@
                 th:value="${signUpForm.username}"
                 type="text"/>
         <input
+                autocomplete="off"
                 id="password"
                 name="password"
                 placeholder="비밀번호"
                 required
                 type="password"/>
+        <input
+                autocomplete="new-password"
+                id="passwordConfirm"
+                name="passwordConfirm"
+                placeholder="비밀번호 확인"
+                required
+                type="password"/>
         <button class="signup-button" type="submit">가입하기</button>
     </form>
-
-    <p class="error-message" id="error"></p>
+    <p class="error-message" th:if="${error}" th:text="${error}"></p>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const form = document.getElementById('signupForm');
+        const pwd = document.getElementById('password');
+        const pwdCf = document.getElementById('passwordConfirm');
+        const errorEl = document.getElementById('error');
+
+        // HTML5 validity message 설정 함수
+        function validatePasswords() {
+            if (!pwd.value || !pwdCf.value) {
+                pwdCf.setCustomValidity('');
+                errorEl.textContent = '';
+                return;
+            }
+            if (pwd.value !== pwdCf.value) {
+                pwdCf.setCustomValidity('비밀번호가 일치하지 않습니다.');
+                errorEl.textContent = '비밀번호가 일치하지 않습니다.';
+            } else {
+                pwdCf.setCustomValidity('');
+                errorEl.textContent = '';
+            }
+        }
+
+        pwd.addEventListener('input', validatePasswords);
+        pwdCf.addEventListener('input', validatePasswords);
+
+        // 폼 제출 전 브라우저 기본 검증 호출
+        form.addEventListener('submit', event => {
+            validatePasswords();
+            if (!form.checkValidity()) {
+                // 사용자에게 포커스 이동
+                if (pwd.value !== pwdCf.value) {
+                    pwdCf.reportValidity();
+                }
+                event.preventDefault();
+            }
+        });
+    });
+</script>
 </body>
 </html>
