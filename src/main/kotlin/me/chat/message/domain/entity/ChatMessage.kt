@@ -9,6 +9,7 @@ import java.time.ZoneId
 data class ChatMessage(
     @Id
     val id: String? = null,
+    val memberId: String? = "whoever",
     val content: String,
     val sender: String,
     val timestamp: LocalDateTime = LocalDateTime.now(ASIA_SEOUL)

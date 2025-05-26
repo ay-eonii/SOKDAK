@@ -6,8 +6,9 @@ data class ChatRequest(
     val content: String,
     val sender: String
 ) {
-    fun toChatMessage(): ChatMessage {
+    fun toChatMessage(memberId: String?): ChatMessage {
         return ChatMessage(
+            memberId = memberId,
             content = this.content,
             sender = this.sender
         )

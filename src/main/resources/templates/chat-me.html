@@ -159,7 +159,7 @@
 <body>
 <div class="header">
     <a class="home-button" th:href="@{/}">＜홈</a>
-    <h2>누군가에게 물어보세요</h2>
+    <h2>스스로에게 물어보세요</h2>
 </div>
 
 <p class="error-message" th:if="${errorMessage}" th:text="${errorMessage}"></p>
@@ -216,9 +216,10 @@
         const content = contentInput.value.trim();
         if (!content) return alert('메시지를 입력해주세요.');
 
-        fetch('/chat/any', {
+        fetch('/chat/room', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
+            credentials: 'same-origin',
             body: JSON.stringify({sender: senderType, content})
         })
             .then(res => {
