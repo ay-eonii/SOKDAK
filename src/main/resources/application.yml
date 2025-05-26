@@ -8,7 +8,10 @@ spring:
       username: ${DB_USERNAME}
       password: ${DB_PASSWORD}
       authentication-database: admin
-
+  security:
+    jwt:
+      token:
+        secret-key: ${JWT_SECRET}
+        validityInMilliseconds: 3600000
 web:
   origin: ${ORIGIN}
-
