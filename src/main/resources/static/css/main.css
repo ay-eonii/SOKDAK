@@ -1,0 +1,150 @@
+/* public/css/main.css */
+body, input, textarea, button {
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+    background-color: #f0f0f0;
+    box-sizing: border-box;
+}
+
+#chat-window {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 600px;
+    height: 700px;
+    overflow-y: auto;
+    padding: 24px;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    margin-bottom: 16px;
+}
+
+.row {
+    flex-direction: row;
+}
+
+.row-reverse {
+    flex-direction: row-reverse;
+}
+
+.message, .my-message {
+    padding: 10px 14px;
+    border-radius: 10px;
+    font-size: 16px;
+    word-break: break-word;
+    max-width: 75%;
+}
+
+.message {
+    background-color: #f3f0f9;
+    align-self: flex-start;
+}
+
+.my-message {
+    background-color: #e6f4ea;
+    align-self: flex-end;
+}
+
+.sender {
+    font-weight: bold;
+    color: #28a745;
+    margin-bottom: 4px;
+}
+
+.my-message .sender {
+    color: #007bff;
+}
+
+.timestamp {
+    font-size: 0.75em;
+    color: #888;
+    margin: 0 8px;
+    white-space: nowrap;
+}
+
+.input-area {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+    max-width: 600px;
+}
+
+textarea {
+    flex-grow: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    resize: none;
+}
+
+button {
+    padding: 10px 16px;
+    background-color: #63c5aa;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #4cb89a;
+}
+
+.error-message {
+    color: red;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.feedback-link {
+    margin-top: 12px;
+    font-size: 0.9em;
+    color: #555;
+    text-align: center;
+}
+
+.feedback-link a {
+    color: #5e7999;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.feedback-link a:hover {
+    text-decoration: underline;
+}
+
+.home-button {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 12px;
+    font-size: 20px;
+    font-weight: 500;
+    color: #333333;
+    border: none;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: transform .1s ease, box-shadow .2s ease;
+}
+
+.header {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto 16px;
+    text-align: center;
+}

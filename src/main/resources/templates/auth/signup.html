@@ -69,16 +69,9 @@
 
 <div class="signup-container">
     <h2>회원가입</h2>
-    <!-- 1) 숨김 필드: 브라우저가 여기에 자동완성 넣게 유도 -->
-
     <form autocomplete="off" method="post" th:action="@{/signup}">
-        <input autocomplete="username" name="fake-user" style="position:absolute; top:-1000px; left:-1000px;"
-               type="text"/>
-        <input autocomplete="current-password" name="fake-pass" style="position:absolute; top:-1000px; left:-1000px;"
-               type="password"/>
-
         <input
-                autocomplete="off"
+                autocomplete="new-username"
                 id="name"
                 name="username"
                 placeholder="이름"
@@ -86,7 +79,7 @@
                 th:value="${signUpForm.username}"
                 type="text"/>
         <input
-                autocomplete="off"
+                autocomplete="new-password"
                 id="password"
                 name="password"
                 placeholder="비밀번호"

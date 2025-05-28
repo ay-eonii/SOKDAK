@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 class ChatController(private val chatService: ChatService) {
 
-    @PostMapping("/chat/room")
+    @PostMapping("/chat/me")
     fun sendMessage(
         @RequestBody request: ChatRequest,
         @AuthenticationPrincipal user: User,

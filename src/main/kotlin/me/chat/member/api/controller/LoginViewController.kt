@@ -14,13 +14,13 @@ class LoginViewController(private val memberService: MemberService) {
     @GetMapping("/login")
     fun login(model: Model): String {
         model.addAttribute("signUpForm", SignUpForm())
-        return "login"
+        return "auth/login"
     }
 
     @GetMapping("/signup")
     fun signupForm(model: Model): String {
         model.addAttribute("signUpForm", SignUpForm())
-        return "signup"
+        return "auth/signup"
     }
 
     @PostMapping("/signup")
@@ -30,10 +30,10 @@ class LoginViewController(private val memberService: MemberService) {
     ): String {
         val result: Boolean = memberService.signUp(request)
         if (result) {
-            return "redirect:/login?signupSuccess"
+            return "redirect:/auth/login?signupSuccess"
         }
         model.addAttribute("error", "이미 사용 중인 이름입니다.")
         model.addAttribute("signUpForm", request)
-        return "signup"
+        return "auth/signup"
     }
 }

@@ -64,12 +64,8 @@
     <h2>채팅에 입장하려면 로그인하세요</h2>
 
     <form autocomplete="off" method="post" th:action="@{/login}">
-        <input autocomplete="username" name="fake-user" style="position:absolute; top:-1000px; left:-1000px;"
-               type="text"/>
-        <input autocomplete="current-password" name="fake-pass" style="position:absolute; top:-1000px; left:-1000px;"
-               type="password"/>
         <input
-                autocomplete="off"
+                autocomplete="new-username"
                 id="name"
                 name="username"
                 placeholder="이름"
@@ -77,7 +73,7 @@
                 th:value="${signUpForm.username}"
                 type="text"/>
         <input
-                autocomplete="off"
+                autocomplete="new-password"
                 id="password"
                 name="password"
                 placeholder="비밀번호"

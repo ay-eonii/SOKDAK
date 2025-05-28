@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko" th:fragment="base(pageTitle, pageHeader, senderLabel)" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${pageTitle}">Chat</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+</head>
+<body>
+<div th:replace="layout/header :: header(${pageHeader})"></div>
+
+<p class="error-message" th:if="${errorMessage}" th:text="${errorMessage}"></p>
+
+<div id="chat-window">
+    <div style="display: flex; align-items: flex-end; margin-bottom: 12px;"
+         th:classappend="${msg.sender == '나'} ? 'row' : 'row-reverse'"
+         th:each="msg : ${messages}">
+        <div th:class="${msg.sender == '나'} ? 'message' : 'my-message'">
+            <span class="sender" th:text="${msg.sender == '나'} ? ${senderLabel} : ' '"></span>
+            <span style="white-space: pre-wrap;" th:text="${msg.content}"></span>
+        </div>
+        <span class="timestamp" th:text="${#temporals.format(msg.timestamp, 'HH:mm')}"></span>
+    </div>
+</div>
+
+<div class="input-area">
+    <button id="questionButton" title="Ctrl + Enter" type="button">질문하기</button>
+    <textarea id="contentInput" placeholder="메시지 입력..." required rows="2"></textarea>
+    <button id="answerButton" title="Enter" type="button">대답하기</button>
+</div>
+
+<div class="feedback-link">
+    <a href="https://forms.gle/UBNHMTcbvcYQNeCa7" target="_blank">💬 서비스에 대해 어떻게 느끼셨나요?</a>
+</div>
+
+<script th:src="@{/js/chat.js}"></script>
+</body>
+</html>

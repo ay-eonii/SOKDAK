@@ -2,20 +2,15 @@ package me.chat.common.config
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.http.SessionCreationPolicy
-import org.springframework.security.core.userdetails.UserDetailsService
-import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.SecurityFilterChain
+import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint
 
 @Configuration
 @EnableWebSecurity
-class SecurityConfig(
-    private val userDetailsService: UserDetailsService,
-    private val passwordEncoder: PasswordEncoder
-) {
+class SecurityConfig {
 
     @Bean
     fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
@@ -34,12 +29,19 @@ class SecurityConfig(
                     .anyRequest().authenticated()
             }
 
+            // 인증이 필요한 요청이 들어오면 "/" 로 redirect
+            .exceptionHandling {
+                it
+                    .authenticationEntryPoint(LoginUrlAuthenticationEntryPoint("/login"))
+                    .accessDeniedPage("/")    // 권한은 있지만 접근이 막혔을 때도 "/"
+            }
+
             // 커스텀 로그인 폼
             .formLogin {
                 it
                     .loginPage("/login")
                     .loginProcessingUrl("/login")
-                    .defaultSuccessUrl("/chat/room", true)
+                    .defaultSuccessUrl("/chat/me", true)
                     .failureUrl("/login?error")
                     .permitAll()
             }
@@ -52,13 +54,5 @@ class SecurityConfig(
             }
 
         return http.build()
-    }
-
-    @Bean
-    fun authProvider(): DaoAuthenticationProvider {
-        return DaoAuthenticationProvider().apply {
-            setUserDetailsService(userDetailsService)
-            setPasswordEncoder(passwordEncoder)
-        }
     }
 }

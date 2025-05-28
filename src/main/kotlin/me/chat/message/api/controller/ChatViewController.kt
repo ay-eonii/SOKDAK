@@ -20,10 +20,10 @@ class ChatViewController(
     @GetMapping("/chat/any")
     fun getAnyChatPage(model: Model): String {
         model.addAttribute("messages", chatService.getAnyMessages())
-        return "chat"
+        return "chat/any"
     }
 
-    @GetMapping("/chat/room")
+    @GetMapping("/chat/me")
     fun getMyChatPage(
         @AuthenticationPrincipal user: User,
         model: Model
@@ -31,6 +31,6 @@ class ChatViewController(
         val messages = chatService.getMyMessages(user.username)
         model.addAttribute("messages", messages)
 
-        return "chat-me"
+        return "chat/me"
     }
 }
