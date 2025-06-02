@@ -6,20 +6,12 @@
     <link rel="stylesheet" th:href="@{/css/main.css}">
 </head>
 <body>
-<div th:replace="layout/header :: header(${pageHeader})"></div>
+<div th:replace="~{layout/header :: header(${pageHeader})}"></div>
 
 <p class="error-message" th:if="${errorMessage}" th:text="${errorMessage}"></p>
 
 <div id="chat-window">
-    <div style="display: flex; align-items: flex-end; margin-bottom: 12px;"
-         th:classappend="${msg.sender == '나'} ? 'row' : 'row-reverse'"
-         th:each="msg : ${messages}">
-        <div th:class="${msg.sender == '나'} ? 'message' : 'my-message'">
-            <span class="sender" th:text="${msg.sender == '나'} ? ${senderLabel} : ' '"></span>
-            <span style="white-space: pre-wrap;" th:text="${msg.content}"></span>
-        </div>
-        <span class="timestamp" th:text="${#temporals.format(msg.timestamp, 'HH:mm')}"></span>
-    </div>
+    <div th:replace="~{fragments/message-list :: messageList(${messages}, ${senderLabel})}"></div>
 </div>
 
 <div class="input-area">

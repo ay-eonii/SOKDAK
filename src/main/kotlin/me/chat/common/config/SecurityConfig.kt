@@ -25,7 +25,7 @@ class SecurityConfig {
             // URL 접근 권한
             .authorizeHttpRequests {
                 it
-                    .requestMatchers("/", "/signup", "/login", "/chat/any", "/css/**", "/js/**").permitAll()
+                    .requestMatchers("/", "/signup", "/login", "/chat/any/**", "/css/**", "/js/**").permitAll()
                     .anyRequest().authenticated()
             }
 

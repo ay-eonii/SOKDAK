@@ -1,0 +1,14 @@
+<div id="box" th:fragment="messageList(messages, senderLabel)">
+    <div id="sentinel"></div>
+    <div style="display: flex; align-items: flex-end; margin-bottom: 12px;"
+         th:classappend="${msg.sender == '나'} ? 'row' : 'row-reverse'"
+         th:each="msg : ${messages}">
+        <div th:class="${msg.sender == '나'} ? 'message' : 'my-message'">
+      <span class="sender"
+            th:text="${msg.sender == '나'} ? ${senderLabel} : ' '"></span>
+            <span style="white-space: pre-wrap;" th:text="${msg.content}"></span>
+        </div>
+        <span class="timestamp" th:text="${#temporals.format(msg.timestamp, 'HH:mm')}"></span>
+    </div>
+    <meta name="nextCursor" th:content="${nextCursor}"/>
+</div>
