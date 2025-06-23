@@ -2,12 +2,22 @@ spring:
   data:
     mongodb:
       uri: ${DB_URL}
-      host: ${HOST:localhost}
-      port: ${PORT:27017}
+      host: ${HOST}
       database: ${DB_DATABASE:chatme}
       username: ${DB_USERNAME}
       password: ${DB_PASSWORD}
       authentication-database: admin
+
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            provider: google
+            client-id: ${GOOGLE_CLIENT_ID}
+            client-secret: ${GOOGLE_CLIENT_SECRET}
+            authorization-grant-type: authorization_code
+            scope: profile, email
 
 web:
   origin: ${ORIGIN}

@@ -15,7 +15,7 @@
         }
 
         .login-container {
-            background-color: #f9f9f9;
+            background-color: #fff;
             padding: 40px;
             border-radius: 16px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
@@ -31,66 +31,46 @@
             color: #333;
         }
 
-        input[type="text"], input[type="password"] {
-            width: 100%;
-            padding: 12px;
+        .google-btn-pill {
+            display: flex;
+            align-items: center;
+            background-color: #fff;
+            color: #757575;
+            border: 1px solid #dadce0;
+            border-radius: 50px;
+            padding: 0 20px;
+            font-size: 14px;
+            font-weight: 500;
+            height: 40px;
+            text-decoration: none;
+            box-shadow: 0 1px 2px rgba(60, 64, 67, 0.3);
+            transition: background-color 0.2s;
             margin-bottom: 16px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 16px;
-            box-sizing: border-box;
         }
 
-        .login-button {
-            width: 100%;
-            padding: 12px;
-            font-size: 16px;
-            background-color: #63c5aa;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.2s ease-in-out;
+        .google-btn-pill:hover {
+            background-color: #f7f8f8;
         }
 
-        .login-button:hover {
-            background-color: #4cb89a;
+        .google-icon {
+            width: 18px;
+            height: 18px;
+            margin-right: 8px;
+        }
+
+        .btn-text {
+            display: inline-block;
+            vertical-align: middle;
         }
     </style>
 </head>
-
 <body>
 <div class="login-container">
     <h2>채팅에 입장하려면 로그인하세요</h2>
-
-    <form autocomplete="off" method="post" th:action="@{/login}">
-        <input
-                autocomplete="new-username"
-                id="name"
-                name="username"
-                placeholder="이름"
-                required
-                th:value="${signUpForm.username}"
-                type="text"/>
-        <input
-                autocomplete="new-password"
-                id="password"
-                name="password"
-                placeholder="비밀번호"
-                required
-                type="password"/>
-        <button class="login-button" type="submit">로그인</button>
-    </form>
-    <div th:if="${param.error}">
-        <p style="color:red">로그인 정보가 올바르지 않습니다.</p>
-    </div>
-    <div th:if="${param.logout}">
-        <p style="color:green">로그아웃되었습니다.</p>
-    </div>
-    <p style="margin-top: 12px; font-size: 0.9em;">
-        아직 계정이 없다면?
-        <a style="color: #4cb89a; font-weight: bold; text-decoration: none;" th:href="@{/signup}">회원가입</a>
-    </p>
+    <a class="google-btn-pill" href="/oauth2/authorization/google">
+        <img alt="Google logo" class="google-icon" src="https://developers.google.com/identity/images/g-logo.png">
+        <span class="btn-text">Sign in with Google</span>
+    </a>
 </div>
 </body>
 </html>

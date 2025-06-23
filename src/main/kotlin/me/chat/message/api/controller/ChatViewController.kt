@@ -3,7 +3,7 @@ package me.chat.message.api.controller
 import me.chat.message.api.CursorPage
 import me.chat.message.domain.service.ChatService
 import org.springframework.security.core.annotation.AuthenticationPrincipal
-import org.springframework.security.core.userdetails.User
+import org.springframework.security.oauth2.core.user.OAuth2User
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
@@ -45,11 +45,11 @@ class ChatViewController(
 
     @GetMapping("/chat/me")
     fun getMyChatPage(
-        @AuthenticationPrincipal user: User,
+        @AuthenticationPrincipal user: OAuth2User,
         @RequestParam(required = false) cursor: String?,
         model: Model,
     ): String {
-        val page: CursorPage = chatService.getMyMessages(user.username, cursor)
+        val page: CursorPage = chatService.getMyMessages(user.name, cursor)
         model.addAttribute("messages", page.messages)
         model.addAttribute("nextCursor", page.nextCursor);
         return "chat/me"
@@ -57,12 +57,12 @@ class ChatViewController(
 
     @GetMapping("/chat/me/load")
     fun loadMoreMyMessages(
-        @AuthenticationPrincipal user: User,
+        @AuthenticationPrincipal user: OAuth2User,
         @RequestParam cursor: String?,
         model: Model
     ): String {
         return populateChatModel(
-            getPage = { chatService.getMyMessages(user.username, cursor) },
+            getPage = { chatService.getMyMessages(user.name, cursor) },
             model = model,
             senderLabel = "나"
         )

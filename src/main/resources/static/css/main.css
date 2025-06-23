@@ -11,6 +11,7 @@ body {
     padding: 20px;
     background-color: #f0f0f0;
     box-sizing: border-box;
+    overflow: hidden;
 }
 
 #chat-window {
